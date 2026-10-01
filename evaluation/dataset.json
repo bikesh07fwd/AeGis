@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "question": "Search Google Drive for the August invoice and calculate a 15% tip.",
+    "expected_agents": ["research_agent", "math_agent", "writing_agent"],
+    "expected_tools": ["search_google_drive", "calculator"],
+    "expected_status": "APPROVED"
+  },
+  {
+    "id": 2,
+    "question": "What is our company vacation policy?",
+    "expected_agents": ["writing_agent"],
+    "expected_tools": [],
+    "expected_status": "APPROVED"
+  }
+]

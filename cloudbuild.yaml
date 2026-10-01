@@ -1,0 +1,25 @@
+steps:
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/enterprise-ai-os', '.']
+  
+  # Push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/enterprise-ai-os']
+  
+  # Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'enterprise-ai-os'
+      - '--image'
+      - 'gcr.io/$PROJECT_ID/enterprise-ai-os'
+      - '--region'
+      - 'us-central1'
+      - '--allow-unauthenticated'
+      - '--set-secrets=GEMINI_API_KEY=gemini-api-key:latest,ENTERPRISE_API_KEY=enterprise-api-key:latest,DATABASE_URL=alloydb-connection-string:latest'
+
+images:
+  - 'gcr.io/$PROJECT_ID/enterprise-ai-os'
